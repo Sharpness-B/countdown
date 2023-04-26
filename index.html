@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta charset="utf-8">
         <title>Countdown</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="https://vipps.no/static/vipps_frontend/812833/media/images/favicons/favicon.ico">
 
         <style>
             #h1_number {
@@ -14,7 +14,7 @@
                 transform: translate(-50%, -50%);
                 margin: 0;
 
-                font-size: 30vw;
+                font-size: 15vw;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
         </style>
@@ -24,8 +24,9 @@
         <h1 id="h1_number"></h1>
 
         <script defer>
-            let h1_number = document.getElementById("h1_number")
-            h1_number.innerHTML = Math.ceil( (new Date("8/11/2023") - new Date()) / (1000 * 3600 * 24) );
+            let h1_number = document.getElementById("h1_number");
+            number = Math.ceil( (new Date("8/11/2023") - new Date()) / (1000 * 3600 * 24) );
+            h1_number.innerHTML = (number < 0) ? 0 : number;
         </script>
     </body>
 </html>
