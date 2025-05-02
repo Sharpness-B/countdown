@@ -19,26 +19,13 @@
     .wheel-container {
       position: relative;
       width: 600px;
-      height: 750px; /* Increased height */
+      height: 750px;
     }
 
     canvas {
       position: absolute;
       top: 0;
       left: 0;
-    }
-
-    .pointer {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 20px solid transparent;
-      border-right: 20px solid transparent;
-      border-top: 40px solid red;
-      z-index: 2;
     }
 
     button {
@@ -49,11 +36,24 @@
       border: 2px solid black;
       cursor: pointer;
     }
+
+    /* Dynamic scaling for mobile */
+    @media (max-width: 600px) {
+    .wheel-container {
+        width: 100vw;
+        height: calc(100vw * 750 / 600); /* Maintain 600:750 ratio */
+    }
+
+    canvas {
+        width: 100%;
+        height: 100%;
+    }
+    }
+
   </style>
 </head>
 <body>
   <div class="wheel-container">
-    <div class="pointer"></div>
     <canvas id="wheel" width="600" height="750"></canvas>
   </div>
   <button onclick="spinWheel()">SPINN</button>
@@ -112,6 +112,7 @@
 
       drawBulbs();
       drawStand();
+      drawPointer()
     }
 
     function drawBulbs() {
@@ -161,6 +162,29 @@
       ctx.fillRect(centerX - standWidth / 2, standTop, standWidth, standHeight);
       ctx.fillRect(centerX - baseWidth / 2, standTop + standHeight, baseWidth, baseHeight);
     }
+
+    function drawPointer() {
+        const pointerHeight = 40;
+        const pointerWidth = 40;
+
+        ctx.save();
+        ctx.translate(centerX, centerY - radius - pointerHeight + 50);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(pointerWidth / 2, -pointerHeight);
+        ctx.lineTo(-pointerWidth / 2, -pointerHeight);
+        ctx.closePath();
+
+        ctx.fillStyle = 'red';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = 4;
+        ctx.fill();
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+        ctx.restore();
+    }
+
 
     function spinWheel() {
       const spinDegrees = 360 * 4 + Math.random() * 360;
