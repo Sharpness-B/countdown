@@ -1,32 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Countdown</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA_ySadLXHpcKt-R_vYZK4M0H8dVHIvRQc8A&s">
+<head>
+    <meta charset="utf-8">
+    <title>Countdown</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA_ySadLXHpcKt-R_vYZK4M0H8dVHIvRQc8A&s">
 
-        <style>
-            #h1_number {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                margin: 0;
+    <style>
+        #container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-                font-size: 15vw;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            }
-        </style>
-    </head>
+        #h1_number {
+            margin: 0;
+            font-size: 10em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <body>
+        #subtext {
+            font-size: 2em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
         <h1 id="h1_number"></h1>
+        <p id="subtext">Make it happen! Go go gorilla!🔥</p>
+    </div>
 
-        <script defer>
-            let h1_number = document.getElementById("h1_number");
-            number = Math.ceil( (new Date("Jun 3 2025") - new Date()) / (1000 * 3600 * 24) );
-            h1_number.innerHTML = (number < 0) ? 0 : number;
-        </script>
-    </body>
+    <script defer>
+        let h1_number = document.getElementById("h1_number");
+        let number = Math.ceil((new Date("May 7 2025") - new Date()) / (1000 * 3600 * 24));
+        h1_number.innerHTML = (number < 0) ? 0 : number;
+    </script>
+</body>
 </html>
