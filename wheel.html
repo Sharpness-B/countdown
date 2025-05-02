@@ -19,7 +19,7 @@
     .wheel-container {
       position: relative;
       width: 600px;
-      height: 600px;
+      height: 750px; /* Increased height */
     }
 
     canvas {
@@ -41,29 +41,8 @@
       z-index: 2;
     }
 
-    .stand {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 140px;
-      background: black;
-    }
-
-    .stand-base {
-      position: absolute;
-      top: calc(100% + 140px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 30px;
-      background: black;
-      border-radius: 4px;
-    }
-
     button {
-      margin-top: 220px;
+      margin-top: 30px;
       padding: 10px 20px;
       font-size: 16px;
       background: white;
@@ -75,9 +54,7 @@
 <body>
   <div class="wheel-container">
     <div class="pointer"></div>
-    <canvas id="wheel" width="600" height="600"></canvas>
-    <div class="stand"></div>
-    <div class="stand-base"></div>
+    <canvas id="wheel" width="600" height="750"></canvas>
   </div>
   <button onclick="spinWheel()">SPINN</button>
 
@@ -86,14 +63,14 @@
     const ctx = canvas.getContext('2d');
     const radius = 250;
     const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+    const centerY = 300; // Adjusted wheel center up to make room for stand
 
     const categories = [
       { label: 'Sparken', size: 120, color: '#ffffff', textColor: 'red' },
-      { label: 'Forfremmelse',        size: 60, color: '#f4a300', textColor: 'white' },
-      { label: 'Bonus',      size: 60, color: '#6faa3e', textColor: 'white' },
-      { label: 'PWC',          size: 60, color: '#5fc0b8', textColor: 'white' },
-      { label: 'Deloitte',     size: 60, color: '#1e73be', textColor: 'white' },
+      { label: 'Forfremmelse', size: 60, color: '#f4a300', textColor: 'white' },
+      { label: 'Bonus', size: 60, color: '#6faa3e', textColor: 'white' },
+      { label: 'PWC', size: 60, color: '#5fc0b8', textColor: 'white' },
+      { label: 'Deloitte', size: 60, color: '#1e73be', textColor: 'white' },
     ];
 
     const bulbColors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
@@ -106,7 +83,6 @@
       for (const category of categories) {
         const endAngle = startAngle + (category.size * Math.PI / 180);
 
-        // Draw sector
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius, startAngle, endAngle);
@@ -116,7 +92,6 @@
         ctx.strokeStyle = 'black';
         ctx.stroke();
 
-        // Tangent text
         const midAngle = (startAngle + endAngle) / 2;
         const textRadius = radius - 25;
         const x = centerX + textRadius * Math.cos(midAngle);
@@ -136,6 +111,7 @@
       }
 
       drawBulbs();
+      drawStand();
     }
 
     function drawBulbs() {
@@ -150,13 +126,11 @@
         ctx.translate(x, y);
         ctx.rotate(angle + Math.PI / 2);
 
-        // Bulb base (small rectangle at bottom)
         ctx.beginPath();
         ctx.rect(-3, 5, 6, 4);
         ctx.fillStyle = '#333';
         ctx.fill();
 
-        // Bulb cone shape (trapezoid-style)
         ctx.beginPath();
         ctx.moveTo(-6, 5);
         ctx.lineTo(-3, -10);
@@ -176,7 +150,17 @@
       }
     }
 
-    
+    function drawStand() {
+      const standTop = centerY + radius - 5;
+      const standWidth = 100;
+      const standHeight = 140;
+      const baseWidth = 200;
+      const baseHeight = 30;
+
+      ctx.fillStyle = 'black';
+      ctx.fillRect(centerX - standWidth / 2, standTop, standWidth, standHeight);
+      ctx.fillRect(centerX - baseWidth / 2, standTop + standHeight, baseWidth, baseHeight);
+    }
 
     function spinWheel() {
       const spinDegrees = 360 * 4 + Math.random() * 360;
